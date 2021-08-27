@@ -2,9 +2,12 @@
 
 <img src="./images/stylegan_example1.gif">
 
-I've made [stylegan](https://github.com/podgorskiy/StyleGANCpp) a little easier to use.  
+## It can run on windows 10  
+## You don't need python or tensorflow.  
+I am using this one: https://github.com/podgorskiy/StyleGANCpp  
+Excellent!I've made [StyleGANCpp](https://github.com/podgorskiy/StyleGANCpp) a little easier to use.    
 
-Overwrite the main.cpp in this repository with the main.cpp in StyleGANCpp and build it.   
+Overwrite the main.cpp in this repository with the main.cpp in [StyleGANCpp](https://github.com/podgorskiy/StyleGANCpp)  and build it.   
 
 ---
 
