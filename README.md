@@ -9,6 +9,12 @@ Excellent!I've made [StyleGANCpp](https://github.com/podgorskiy/StyleGANCpp) a l
 
 Overwrite the main.cpp in this repository with the main.cpp in [StyleGANCpp](https://github.com/podgorskiy/StyleGANCpp)  and build it.   
 
+### How to build
+Use cmake  
+
+If you are using Windows 10, you can build without cmake, but you will need visual studio 2019.  
+StyleGANCpp/build/stylegan.sln  
+
 ---
 
 - Generate various faces by changing the seed

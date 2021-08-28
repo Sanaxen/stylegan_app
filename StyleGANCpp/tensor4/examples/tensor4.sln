@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "alexnet", "alexnet\alexnet.vcxproj", "{49012AA8-91AB-4EE8-9EA2-AD2A818AFF71}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vgg16", "vgg16\vgg16.vcxproj", "{5C57B572-332D-4E9E-A0C8-56CB8281547D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "resnet50", "resnet50\resnet50.vcxproj", "{BEF05CAA-5190-4DB2-AEC0-A1062D78008E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "densenet169", "densenet169\densenet169.vcxproj", "{133DA134-56D8-4D47-9388-FEC034CAE040}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release_plus_MKL|x64 = Release_plus_MKL|x64
+		Release_plus_MKL|x86 = Release_plus_MKL|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49012AA8-91AB-4EE8-9EA2-AD2A818AFF71}.Debug|x64.ActiveCfg = Debug|x64
+		{49012AA8-91AB-4EE8-9EA2-AD2A818AFF71}.Debug|x64.Build.0 = Debug|x64
+		{49012AA8-91AB-4EE8-9EA2-AD2A818AFF71}.Debug|x86.ActiveCfg = Debug|x64
+		{49012AA8-91AB-4EE8-9EA2-AD2A818AFF71}.Release_plus_MKL|x64.ActiveCfg = Release_plus_MKL|x64
+		{49012AA8-91AB-4EE8-9EA2-AD2A818AFF71}.Release_plus_MKL|x64.Build.0 = Release_plus_MKL|x64
+		{49012AA8-91AB-4EE8-9EA2-AD2A818AFF71}.Release_plus_MKL|x86.ActiveCfg = Release_plus_MKL|x64
+		{49012AA8-91AB-4EE8-9EA2-AD2A818AFF71}.Release|x64.ActiveCfg = Release|x64
+		{49012AA8-91AB-4EE8-9EA2-AD2A818AFF71}.Release|x64.Build.0 = Release|x64
+		{49012AA8-91AB-4EE8-9EA2-AD2A818AFF71}.Release|x86.ActiveCfg = Release|x64
+		{49012AA8-91AB-4EE8-9EA2-AD2A818AFF71}.Release|x86.Build.0 = Release|x64
+		{5C57B572-332D-4E9E-A0C8-56CB8281547D}.Debug|x64.ActiveCfg = Debug|x64
+		{5C57B572-332D-4E9E-A0C8-56CB8281547D}.Debug|x64.Build.0 = Debug|x64
+		{5C57B572-332D-4E9E-A0C8-56CB8281547D}.Debug|x86.ActiveCfg = Debug|x64
+		{5C57B572-332D-4E9E-A0C8-56CB8281547D}.Release_plus_MKL|x64.ActiveCfg = Release_plus_MKL|x64
+		{5C57B572-332D-4E9E-A0C8-56CB8281547D}.Release_plus_MKL|x64.Build.0 = Release_plus_MKL|x64
+		{5C57B572-332D-4E9E-A0C8-56CB8281547D}.Release_plus_MKL|x86.ActiveCfg = Release_plus_MKL|x64
+		{5C57B572-332D-4E9E-A0C8-56CB8281547D}.Release|x64.ActiveCfg = Release|x64
+		{5C57B572-332D-4E9E-A0C8-56CB8281547D}.Release|x64.Build.0 = Release|x64
+		{5C57B572-332D-4E9E-A0C8-56CB8281547D}.Release|x86.ActiveCfg = Release|x64
+		{BEF05CAA-5190-4DB2-AEC0-A1062D78008E}.Debug|x64.ActiveCfg = Debug|x64
+		{BEF05CAA-5190-4DB2-AEC0-A1062D78008E}.Debug|x64.Build.0 = Debug|x64
+		{BEF05CAA-5190-4DB2-AEC0-A1062D78008E}.Debug|x86.ActiveCfg = Debug|x64
+		{BEF05CAA-5190-4DB2-AEC0-A1062D78008E}.Release_plus_MKL|x64.ActiveCfg = Release_plus_MKL|x64
+		{BEF05CAA-5190-4DB2-AEC0-A1062D78008E}.Release_plus_MKL|x64.Build.0 = Release_plus_MKL|x64
+		{BEF05CAA-5190-4DB2-AEC0-A1062D78008E}.Release_plus_MKL|x86.ActiveCfg = Release_plus_MKL|x64
+		{BEF05CAA-5190-4DB2-AEC0-A1062D78008E}.Release|x64.ActiveCfg = Release|x64
+		{BEF05CAA-5190-4DB2-AEC0-A1062D78008E}.Release|x64.Build.0 = Release|x64
+		{BEF05CAA-5190-4DB2-AEC0-A1062D78008E}.Release|x86.ActiveCfg = Release|x64
+		{133DA134-56D8-4D47-9388-FEC034CAE040}.Debug|x64.ActiveCfg = Debug|x64
+		{133DA134-56D8-4D47-9388-FEC034CAE040}.Debug|x64.Build.0 = Debug|x64
+		{133DA134-56D8-4D47-9388-FEC034CAE040}.Debug|x86.ActiveCfg = Debug|x64
+		{133DA134-56D8-4D47-9388-FEC034CAE040}.Release_plus_MKL|x64.ActiveCfg = Release_plus_MKL|x64
+		{133DA134-56D8-4D47-9388-FEC034CAE040}.Release_plus_MKL|x64.Build.0 = Release_plus_MKL|x64
+		{133DA134-56D8-4D47-9388-FEC034CAE040}.Release_plus_MKL|x86.ActiveCfg = Release_plus_MKL|x64
+		{133DA134-56D8-4D47-9388-FEC034CAE040}.Release|x64.ActiveCfg = Release|x64
+		{133DA134-56D8-4D47-9388-FEC034CAE040}.Release|x64.Build.0 = Release|x64
+		{133DA134-56D8-4D47-9388-FEC034CAE040}.Release|x86.ActiveCfg = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

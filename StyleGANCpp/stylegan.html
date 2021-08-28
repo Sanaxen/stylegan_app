@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>StyleGAN with WebAssembly</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+
+    <style>
+		body {
+			font-family: arial;
+			margin: 0;
+			padding: none;
+			background-color: #1a2025;
+		}
+
+      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+      div.emscripten { text-align: center; }
+      div.emscripten_border { border: 1px solid black; }
+      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+
+        @media (min-width: 768px) {
+          html {
+            font-size: 16px;
+          }
+        }
+	  .canvas{
+			border: 0px none;
+			background-color: black;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+	  }
+
+      .container{
+        min-width: fit-content;
+      }
+
+      .result-wrapper{
+        height: 1024px;width: 1024px;
+        background-color: #3d576d26;
+        border: 3px dashed #a2a2a2;
+        -webkit-box-sizing:content-box;
+        box-sizing:content-box
+      }
+
+      .progress-bar{
+        transition:none;
+      }
+
+	  .code{
+		  border: 0px none;
+		  background-color: white;
+		  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
+	  }
+
+      #emscripten_logo {
+        display: inline-block;
+        margin: 0;
+      }
+
+      .spinner {
+        height: 30px;
+        width: 30px;
+        margin: 0;
+        margin-top: 20px;
+        margin-left: 20px;
+        display: inline-block;
+        vertical-align: top;
+
+        -webkit-animation: rotation .8s linear infinite;
+        -moz-animation: rotation .8s linear infinite;
+        -o-animation: rotation .8s linear infinite;
+        animation: rotation 0.8s linear infinite;
+
+        border-left: 5px solid rgb(235, 235, 235);
+        border-right: 5px solid rgb(235, 235, 235);
+        border-bottom: 5px solid rgb(235, 235, 235);
+        border-top: 5px solid rgb(120, 120, 120);
+
+        border-radius: 100%;
+        background-color: rgb(189, 215, 46);
+      }
+
+      @-webkit-keyframes rotation {
+        from {-webkit-transform: rotate(0deg);}
+        to {-webkit-transform: rotate(360deg);}
+      }
+      @-moz-keyframes rotation {
+        from {-moz-transform: rotate(0deg);}
+        to {-moz-transform: rotate(360deg);}
+      }
+      @-o-keyframes rotation {
+        from {-o-transform: rotate(0deg);}
+        to {-o-transform: rotate(360deg);}
+      }
+      @keyframes rotation {
+        from {transform: rotate(0deg);}
+        to {transform: rotate(360deg);}
+      }
+
+      #status {
+        display: inline-block;
+        vertical-align: top;
+        margin-top: 30px;
+        margin-left: 20px;
+        font-weight: bold;
+        color: rgb(120, 120, 120);
+      }
+
+      #progress {
+        height: 20px;
+        width: 300px;
+      }
+
+      #controls {
+        display: inline-block;
+        float: right;
+        vertical-align: top;
+        margin-top: 30px;
+        margin-right: 20px;
+      }
+
+      #output {
+        width: 100%;
+        height: 200px;
+        margin: 0 auto;
+        margin-top: 10px;
+        border-left: 0px;
+        border-right: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+        display: block;
+        background-color: black;
+        color: white;
+        font-family: 'Lucida Console', Monaco, monospace;
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="spinner" id='spinner'></div>
+    <div class="emscripten" id="status">Downloading...</div>
+
+    <div class="emscripten">
+      <progress value="0" max="100" id="progress" hidden=1></progress>
+    </div>
+
+    <div class="container d-block mb-5 code py-4 px-2">
+		<div class="row">
+            <h2 class="mx-auto"><a href="https://github.com/NVlabs/stylegan">StyleGAN</a> in WebAssembly using <a href="https://github.com/podgorskiy/tensor4">tensor4.</a> &nbsp&nbsp<a href="https://github.com/podgorskiy/StyleGANCpp"><i class="fab fa-github"></i>Link to code </a> </h2>
+        </div>
+		<div class="row my-0 py-0 mx-2">
+               Give it some time, it's running in a single thread.  &nbsp&nbsp
+		       <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button mx-2" data-text="In-browser StyleGAN using WebAssembly" data-hashtags="stylegan-cpp" data-related="StasPodgorskiy" data-show-count="false">Tweet</a>
+		         &nbsp&nbsp<a href="https://twitter.com/StasPodgorskiy?ref_src=twsrc%5Etfw" class="twitter-follow-button mx-2" data-text="In browser StyleGAN using WebAssembly" data-hashtags="stylegan-cpp" data-related="StasPodgorskiy" data-show-count="false">Follow @StasPodgorskiy</a>
+        </div>
+		<div class="row m-2">
+            <div class="col-3">
+		        <div class="row m-2">
+                        <button class="btn btn-dark mt-0 mx-2 w-75" id="gb" onclick="Generate()">
+                            Generate!
+                        </button>
+		        </div>
+		        <div class="row m-2 d-block ">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="exampleRadios" id="radio1" value="option1" checked>
+                      <label class="form-check-label" for="radio1">
+                        &nbspRandom
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="exampleRadios" id="radio2" value="option2">
+                      <label class="form-check-label" for="radio2">
+                        &nbspFrom given Z
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="exampleRadios" id="radio3" value="option3">
+                      <label class="form-check-label" for="radio3">
+                        &nbspFrom seed: <br/> <input type="number" id="seed" min="0" value="5" />
+                      </label>
+                    </div>
+		        </div>
+		    </div>
+            <div class="col-9">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Z</span>
+                  </div>
+                  <textarea class="form-control form-control-sm" rows="5" id="ta" placeholder="Paste here base64 encoded Z vector" style="overflow:auto;resize:none"></textarea>
+                </div>
+                You can copy-paste this Z string to save generation and restore it later.
+                  <a type="text" id="link" class="" href="stylegan.html#">
+                      Shareable link to this generation
+                  </a>
+          </div>
+		</div>
+		<div class="row m-2">
+                    <div class="progress w-100" >
+                      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="pb" style="width: 0%"></div>
+                    </div>
+		</div>
+		<div class="row m-2 p-0 mt-4">
+		                <div class="result-wrapper  mx-auto" id="container">
+		                </div>
+
+		</div>
+    </div>
+    <div class="navbar justify-content-center text-secondary unselectable">
+        Unofficial implementation of generator of StyleGAN. <a class="ml-2" href="https://github.com/NVlabs/stylegan"> Original code and paper </a> &nbspby Karras et al. and Nvidia. C++ implementation and WebAsm build created by &nbsp<a href="http://podgorskiy.com/"> Stanislav Pidhorskyi </a>. <a class="ml-2" href="https://github.com/podgorskiy/StyleGANCpp">Link to C++ + tensor4 implementation</a>. Web version made with <a class="ml-2" href="https://kripken.github.io/emscripten-site/index.html">emscripten</a>. Weights of StyleGAN are <a class="ml-2" href="https://drive.google.com/drive/folders/1MASQyN5m0voPcx7-9K0r5gObhvvPups7">official, from GoogleDrive</a>.
+    </div>
+
+    <script type='text/javascript'>
+      var statusElement = document.getElementById('status');
+      var progressElement = document.getElementById('progress');
+      var spinnerElement = document.getElementById('spinner');
+	  var imageOut = document.querySelector('#image-out');
+	  var container = document.querySelector('#container');
+	  var progress = document.querySelector('#pb');
+	  var generate_button = document.querySelector('#gb');
+	  var text_area = document.querySelector('#ta');
+	  var radio1 = document.querySelector('#radio1');
+	  var radio2 = document.querySelector('#radio2');
+	  var radio3 = document.querySelector('#radio3');
+	  var seed = document.querySelector('#seed');
+	  var link = document.querySelector('#link');
+	  var working = false;
+      function getAnchor() {
+         return (document.URL.split('#').length > 1) ? document.URL.split('#')[1] : null;
+      }
+	  var renderImage = function(step)
+	  {
+        if (step == 0)
+        {
+		    generate_button.classList.add("disabled");
+		    progress.classList.add("progress-bar-animated");
+		    generate_button.innerHTML = "<span class=\"spinner-border spinner-border-sm\" role=\"status\" aria-hidden=\"true\"></span> Working...";
+		    if (radio1.checked)
+		        str = instance.RandomZ();
+		    if (radio2.checked)
+		    {
+		        instance.SetZfromString(text_area.value);
+		        str = text_area.value
+		    }
+		    if (radio3.checked)
+		    {
+		        str = instance.RandomZfromASeed(parseInt(seed.value));
+		    }
+		    text_area.value = str;
+		    link.href="stylegan.html#" + str
+        }
+        progress.setAttribute("aria-valuenow", Math.round(step * 100 / 8).toString());
+        progress.setAttribute("style", "width: " + Math.round(step * 100 / 8).toString() + "%");
+
+		var img = document.createElement("img");
+        img.setAttribute("width", "1024px");
+        img.setAttribute("height", "1024px");
+		img.src = instance.GenerateImage();
+		while (container.firstChild) {
+		    container.removeChild(container.firstChild);
+		}
+		container.appendChild(img);
+		if (step < 8)
+		    setTimeout(function(){ renderImage(step + 1); }, 100);
+
+        if (step == 8)
+        {
+		    generate_button.classList.remove("disabled");
+		    progress.classList.remove("progress-bar-animated");
+			working = false;
+		    generate_button.innerHTML = "Generate another!"
+        }
+	  };
+
+	  var Generate = function() {};
+	  var instance = function() {};
+
+      var Module = {
+        preRun: [],
+        postRun: function()
+		{
+	        instance = new Module.Generator();
+			Generate = function() {
+			    if (working)
+			        return;
+			    working = true;
+			    setTimeout(function(){ renderImage(0); }, 1);
+			}
+			anchor = getAnchor()
+			if (anchor)
+			{
+			    radio2.checked = true;
+			    text_area.value = anchor;
+                Generate();
+			}
+		},
+        print: (function() {
+          var element = document.getElementById('output');
+          if (element) element.value = ''; // clear browser cache
+          return function(text) {
+            if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+            // These replacements are necessary if you render to raw HTML
+            //text = text.replace(/&/g, "&amp;");
+            //text = text.replace(/</g, "&lt;");
+            //text = text.replace(/>/g, "&gt;");
+            //text = text.replace('\n', '<br>', 'g');
+            console.log(text);
+            if (element) {
+              element.value += text + "\n";
+              element.scrollTop = element.scrollHeight; // focus on bottom
+            }
+          };
+        })(),
+        printErr: function(text) {
+          if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+          console.error(text);
+        },
+        setStatus: function(text) {
+          if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+          if (text === Module.setStatus.last.text) return;
+          var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+          var now = Date.now();
+          if (m && now - Module.setStatus.last.time < 30) return; // if this is a progress update, skip it if too soon
+          Module.setStatus.last.time = now;
+          Module.setStatus.last.text = text;
+          if (m) {
+            text = m[1];
+            progressElement.value = parseInt(m[2])*100;
+            progressElement.max = parseInt(m[4])*100;
+            progressElement.hidden = false;
+            spinnerElement.hidden = false;
+          } else {
+            progressElement.value = null;
+            progressElement.max = null;
+            progressElement.hidden = true;
+            if (!text) spinnerElement.style.display = 'none';
+          }
+          statusElement.innerHTML = text;
+        },
+        totalDependencies: 0,
+        monitorRunDependencies: function(left) {
+          this.totalDependencies = Math.max(this.totalDependencies, left);
+          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+        }
+      };
+      Module.setStatus('Downloading...');
+      window.onerror = function(event) {
+        // TODO: do not warn on ok events like simulating an infinite loop or exitStatus
+        Module.setStatus('Exception thrown, see JavaScript console');
+        spinnerElement.style.display = 'none';
+        Module.setStatus = function(text) {
+          if (text) Module.printErr('[post-exception status] ' + text);
+        };
+      };
+
+	window.setTimeout( function(){
+		(function(){
+			var prism = document.createElement('script'); prism.type = 'text/javascript'; prism.async = true;
+			prism.src = '/static/blog/prismjs/prism.js';
+			(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(prism);
+			prism.onload  = function() {
+				(function(){
+					var prism = document.createElement('link'); prism.type = 'text/css';  prism.rel="stylesheet";
+					prism.href = "/static/blog/prismjs/prism.css";
+					(document.getElementsByTagName('head')[0] || document.getElementsByTagName('head')[0]).appendChild(prism);
+
+					prism.onload  = function() {
+						Prism.highlightAll();
+					}
+				})();
+			}
+		})();
+
+	}, 0 );
+    </script>
+    <script async type="text/javascript" src="stylegan.js"></script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-54781662-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>
+
+
