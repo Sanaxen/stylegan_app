@@ -3,7 +3,7 @@
 <img src="./images/stylegan_example1.gif">
 
 ## It can run on windows 10  
-## You don't need python or tensorflow.  
+## You don't need python and tensorflow.  
 I am using this one: https://github.com/podgorskiy/StyleGANCpp  
 Excellent!I've made [StyleGANCpp](https://github.com/podgorskiy/StyleGANCpp) a little easier to use.    
 
