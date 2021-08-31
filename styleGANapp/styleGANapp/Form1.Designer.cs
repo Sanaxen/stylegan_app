@@ -53,6 +53,10 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
@@ -61,10 +65,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.numericUpDown5);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.trackBar1);
             this.panel1.Controls.Add(this.progressBar1);
@@ -92,8 +99,9 @@
             // button2
             // 
             this.button2.Enabled = false;
+            this.button2.Font = new System.Drawing.Font("MV Boli", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.Location = new System.Drawing.Point(521, 105);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(165, 43);
             this.button2.TabIndex = 16;
@@ -105,7 +113,7 @@
             // 
             this.trackBar1.Enabled = false;
             this.trackBar1.Location = new System.Drawing.Point(16, 105);
-            this.trackBar1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.trackBar1.Margin = new System.Windows.Forms.Padding(4);
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(472, 56);
             this.trackBar1.TabIndex = 15;
@@ -115,7 +123,7 @@
             // 
             this.progressBar1.Enabled = false;
             this.progressBar1.Location = new System.Drawing.Point(17, 69);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(4);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(469, 29);
             this.progressBar1.TabIndex = 14;
@@ -124,7 +132,7 @@
             // 
             this.checkBox3.AutoSize = true;
             this.checkBox3.Location = new System.Drawing.Point(225, 40);
-            this.checkBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBox3.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(110, 19);
             this.checkBox3.TabIndex = 13;
@@ -156,9 +164,12 @@
             this.comboBox1.Size = new System.Drawing.Size(183, 23);
             this.comboBox1.TabIndex = 11;
             this.comboBox1.Text = "FFHQ Faces";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBox1.TextChanged += new System.EventHandler(this.comboBox1_TextChanged);
             // 
             // button1
             // 
+            this.button1.Font = new System.Drawing.Font("MV Boli", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(521, 58);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
@@ -176,6 +187,7 @@
             this.label4.Size = new System.Drawing.Size(74, 15);
             this.label4.TabIndex = 9;
             this.label4.Text = "start_index";
+            this.toolTip1.SetToolTip(this.label4, "Index start number of the image");
             // 
             // numericUpDown4
             // 
@@ -198,6 +210,7 @@
             this.label3.Size = new System.Drawing.Size(34, 15);
             this.label3.TabIndex = 7;
             this.label3.Text = "num";
+            this.toolTip1.SetToolTip(this.label3, "Number to generate");
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // numericUpDown3
@@ -233,6 +246,7 @@
             this.checkBox2.Size = new System.Drawing.Size(98, 19);
             this.checkBox2.TabIndex = 5;
             this.checkBox2.Text = "smooth_psi";
+            this.toolTip1.SetToolTip(this.checkBox2, "truncation trick");
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
@@ -245,6 +259,7 @@
             this.checkBox1.Size = new System.Drawing.Size(89, 19);
             this.checkBox1.TabIndex = 4;
             this.checkBox1.Text = "smooth_Z";
+            this.toolTip1.SetToolTip(this.checkBox1, "Linear interpolation of latent variables");
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
@@ -256,6 +271,7 @@
             this.label2.Size = new System.Drawing.Size(45, 15);
             this.label2.TabIndex = 3;
             this.label2.Text = "seed2";
+            this.toolTip1.SetToolTip(this.label2, "Generating another latent interval vector");
             // 
             // numericUpDown2
             // 
@@ -279,6 +295,7 @@
             this.label1.Size = new System.Drawing.Size(37, 15);
             this.label1.TabIndex = 1;
             this.label1.Text = "seed";
+            this.toolTip1.SetToolTip(this.label1, "Generation of latent interval vectors");
             // 
             // numericUpDown1
             // 
@@ -309,12 +326,12 @@
             this.panel2.Location = new System.Drawing.Point(0, 162);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(200, 454);
+            this.panel2.Size = new System.Drawing.Size(49, 454);
             this.panel2.TabIndex = 2;
             // 
             // splitter2
             // 
-            this.splitter2.Location = new System.Drawing.Point(200, 162);
+            this.splitter2.Location = new System.Drawing.Point(49, 162);
             this.splitter2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.splitter2.Name = "splitter2";
             this.splitter2.Size = new System.Drawing.Size(8, 454);
@@ -325,19 +342,19 @@
             // 
             this.panel3.Controls.Add(this.pictureBox1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(208, 162);
+            this.panel3.Location = new System.Drawing.Point(57, 162);
             this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(981, 454);
+            this.panel3.Size = new System.Drawing.Size(1132, 454);
             this.panel3.TabIndex = 4;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(981, 454);
+            this.pictureBox1.Size = new System.Drawing.Size(1132, 454);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -345,6 +362,48 @@
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.AutoPopDelay = 10000;
+            this.toolTip1.InitialDelay = 500;
+            this.toolTip1.IsBalloon = true;
+            this.toolTip1.ReshowDelay = 100;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // numericUpDown5
+            // 
+            this.numericUpDown5.Location = new System.Drawing.Point(942, 30);
+            this.numericUpDown5.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.numericUpDown5.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown5.Name = "numericUpDown5";
+            this.numericUpDown5.Size = new System.Drawing.Size(61, 22);
+            this.numericUpDown5.TabIndex = 17;
+            this.numericUpDown5.Value = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(892, 35);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(44, 15);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "layers";
             // 
             // Form1
             // 
@@ -368,6 +427,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -398,6 +458,10 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown numericUpDown5;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

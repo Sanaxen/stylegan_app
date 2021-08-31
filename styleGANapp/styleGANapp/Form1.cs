@@ -56,7 +56,7 @@ namespace styleGANapp
         }
         private void ImageClear()
         {
-            for (int i = 0; i < 100000; i++)
+            for (int i = (int)numericUpDown4.Value; i < 100000; i++)
             {
                 string image = "image_" + String.Format("{0:D4}", i) + ".png";
                 if (File.Exists(image))
@@ -72,9 +72,13 @@ namespace styleGANapp
 
         private void p_Exited(object sender, EventArgs e)
         {
-            MessageBox.Show("終了しました。");
+            MessageBox.Show("Finished generating.");
             timer1.Stop();
             timer1.Enabled = false;
+            if ( numericUpDown3.Value > 1)
+            {
+                button2.Enabled = true;
+            }
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -150,6 +154,7 @@ namespace styleGANapp
 
             app.Arguments += " --model_path " + System.IO.Path.GetDirectoryName(stylegan_path + "\\..\\model\\")+"/";
 
+            app.Arguments += " --layers " + numericUpDown5.Value.ToString();
 
             if ( checkBox1.Checked || checkBox2.Checked || checkBox3.Checked)
             {
@@ -185,10 +190,10 @@ namespace styleGANapp
             }
 
             app.UseShellExecute = false;
+            app.WindowStyle = ProcessWindowStyle.Minimized; 
 
             System.Diagnostics.Process p = new System.Diagnostics.Process();
             p.StartInfo = app;
-
             
             //p.SynchronizingObject = this;
             p.Exited += new EventHandler(p_Exited);
@@ -198,6 +203,7 @@ namespace styleGANapp
             ImageClear();
             timer1.Enabled = true;
             timer1.Start();
+            button2.Enabled = false;
             p.Start();
 
             //p.WaitForExit();
@@ -210,7 +216,7 @@ namespace styleGANapp
             if (image_count == numericUpDown3.Value)
                 return;
 
-            string image = curDir + "\\image_" + String.Format("{0:D4}", image_count) + ".png";
+            string image = curDir + "\\image_" + String.Format("{0:D4}", (int)numericUpDown4.Value + image_count) + ".png";
             if ( File.Exists(image))
             {
                 try
@@ -260,7 +266,7 @@ namespace styleGANapp
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            string image = curDir + "\\image_" + String.Format("{0:D4}", trackBar1.Value) + ".png";
+            string image = curDir + "\\image_" + String.Format("{0:D4}", (int)numericUpDown4.Value + trackBar1.Value) + ".png";
             if (File.Exists(image))
             {
                 pictureBox1.Image = CreateImage(image);
@@ -272,7 +278,7 @@ namespace styleGANapp
         {
             GifBitmapEncoder encoder = new GifBitmapEncoder();
 
-            for (int i = 0; i < numericUpDown3.Value; i++)
+            for (int i = 0; i < 100000; i++)
             {
                 string image = curDir + "\\image_" + String.Format("{0:D4}", i) + ".png";
                 if (File.Exists(image))
@@ -280,6 +286,9 @@ namespace styleGANapp
                     BitmapFrame bmpFrame =
                         BitmapFrame.Create(new Uri(image, UriKind.RelativeOrAbsolute));
                     encoder.Frames.Add(bmpFrame);
+                }else
+                {
+                    break;
                 }
             }
 
@@ -303,6 +312,39 @@ namespace styleGANapp
             {
                 checkBox1.Enabled = true;
                 checkBox3.Enabled = true;
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.Text == "FFHQ Faces")
+            {
+                numericUpDown5.Value = 9;
+            }
+            if (comboBox1.Text == "CelebA HQ Faces")
+            {
+                numericUpDown5.Value = 9;
+            }
+            if (comboBox1.Text == "FFHQ Faces")
+            {
+                numericUpDown5.Value = 9;
+            }
+            if (comboBox1.Text == "Anime Faces1")
+            {
+                numericUpDown5.Value = 8;
+            }
+            if (comboBox1.Text == "Anime Faces2")
+            {
+                numericUpDown5.Value = 8;
+            }
+            if (comboBox1.Text == "Anime Portraits")
+            {
+                numericUpDown5.Value = 8;
             }
         }
     }
