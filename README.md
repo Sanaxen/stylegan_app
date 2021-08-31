@@ -9,6 +9,12 @@ Excellent!I've made [StyleGANCpp](https://github.com/podgorskiy/StyleGANCpp) a l
 
 Overwrite the main.cpp in this repository with the main.cpp in [StyleGANCpp](https://github.com/podgorskiy/StyleGANCpp)  and build it.   
 
+
+
+## GUI application
+
+<img src ="./images/gui_app.png">
+
 ### How to build
 Use cmake  
 
