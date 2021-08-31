@@ -2,6 +2,10 @@
 
 <img src="./images/stylegan_example1.gif">
 
+## GUI application
+
+<img src ="./images/gui_app.png" width=60%>
+
 ## It can run on windows 10  
 ## You don't need python and tensorflow.  
 I am using this one: https://github.com/podgorskiy/StyleGANCpp  
@@ -11,9 +15,6 @@ Overwrite the main.cpp in this repository with the main.cpp in [StyleGANCpp](htt
 
 
 
-## GUI application
-
-<img src ="./images/gui_app.png">
 
 ### How to build
 Use cmake  
