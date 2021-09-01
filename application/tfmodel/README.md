@@ -30,6 +30,12 @@ https://github.com/justinpinkney/awesome-pretrained-stylegan
 
 ---
 
+## WikiArt  
+
+- [network-snapshot-011125.pkl](https://drive.google.com/u/0/uc?export=download&confirm=24nG&id=1cJQtMeTy_QldOP7n64F8stCDXY6Esup9)
+
+
+
 
 
 convertor.py - converts stylegan weights to a binary.  

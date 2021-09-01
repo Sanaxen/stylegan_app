@@ -157,16 +157,13 @@ def load_from(name, layers=9):
 
 
 if __name__ == '__main__':
-    #model = load_from('karras2019stylegan-celebahq-1024x1024.pkl')
     model = load_from('karras2019stylegan-ffhq-1024x1024.pkl')
-    ##model = load_from('2020-01-11-skylion-stylegan2-animeportraits-networksnapshot-024664.pkl', layers=8)
+    #model = load_from('karras2019stylegan-celebahq-1024x1024.pkl')
     #model = load_from('2019-02-26-stylegan-faces-network-02048-016041.pkl', layers=8)
-    ##model = load_from('network-snapshot-000880.pkl')
-    ##model = load_from('network-snapshot-012052.pkl', layers=8)
     #model = load_from('2019-03-08-stylegan-animefaces-network-02051-021980.pkl', layers=8)
     #model = load_from('2019-04-30-stylegan-danbooru2018-portraits-02095-066083.pkl', layers=8)
-    
-   
+    #model = load_from('network-snapshot-011125.pkl', layers=8)
+
     
     
     write_blob(model)

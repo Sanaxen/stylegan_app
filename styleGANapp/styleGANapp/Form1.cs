@@ -112,6 +112,10 @@ namespace styleGANapp
             app.Arguments += " --num " + numericUpDown3.Value.ToString();
             app.Arguments += " --start_index " + numericUpDown4.Value.ToString();
 
+            if (checkBox4.Checked)
+            {
+                app.Arguments += " --seed1toN 1";
+            }
             if (checkBox3.Checked)
             {
                 app.Arguments += " --random_seed 1";
@@ -150,6 +154,11 @@ namespace styleGANapp
             {
                 model = "StyleGAN_2019-04-30-stylegan-danbooru2018-portraits-02095-066083.ct4";
             }
+            if (comboBox1.Text == "WikiArt")
+            {
+                model = "StyleGAN_WikiArt.ct4";
+            }
+            //
             app.Arguments += " --model "+ model;
 
             app.Arguments += " --model_path " + System.IO.Path.GetDirectoryName(stylegan_path + "\\..\\model\\")+"/";
@@ -238,12 +247,14 @@ namespace styleGANapp
             {
                 checkBox1.Enabled = false;
                 checkBox2.Enabled = false;
+                checkBox4.Enabled = false;
                 numericUpDown1.Enabled = false;
                 numericUpDown2.Enabled = false;
             }else
             {
                 checkBox1.Enabled = true;
                 checkBox2.Enabled = true;
+                checkBox4.Enabled = true;
                 numericUpDown1.Enabled = true;
                 numericUpDown2.Enabled = true;
             }
@@ -256,11 +267,14 @@ namespace styleGANapp
                 numericUpDown2.Enabled = true;
                 checkBox2.Enabled = false;
                 checkBox3.Enabled = false;
-            }else
+                checkBox4.Enabled = false;
+            }
+            else
             {
                 numericUpDown2.Enabled = false;
                 checkBox2.Enabled = true;
                 checkBox3.Enabled = true;
+                checkBox4.Enabled = true;
             }
         }
 
@@ -308,10 +322,13 @@ namespace styleGANapp
             {
                 checkBox1.Enabled = false;
                 checkBox3.Enabled = false;
-            }else
+                checkBox4.Enabled = false;
+            }
+            else
             {
                 checkBox1.Enabled = true;
                 checkBox3.Enabled = true;
+                checkBox4.Enabled = true;
             }
         }
 
@@ -345,6 +362,30 @@ namespace styleGANapp
             if (comboBox1.Text == "Anime Portraits")
             {
                 numericUpDown5.Value = 8;
+            }
+            if (comboBox1.Text == "WikiArt")
+            {
+                numericUpDown5.Value = 8;
+            }
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox4.Checked)
+            {
+                checkBox1.Enabled = false;
+                checkBox2.Enabled = false;
+                checkBox3.Enabled = false;
+                numericUpDown1.Enabled = false;
+                numericUpDown2.Enabled = false;
+            }
+            else
+            {
+                checkBox1.Enabled = true;
+                checkBox2.Enabled = true;
+                checkBox3.Enabled = true;
+                numericUpDown1.Enabled = true;
+                numericUpDown2.Enabled = true;
             }
         }
     }
